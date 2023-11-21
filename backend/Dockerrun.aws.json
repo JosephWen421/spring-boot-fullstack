@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "spring-boot-example",
-      "image": "josephwen/spring-boot-example:latest",
+      "image": "josephwen/josephwen-api:latest",
       "essential": true,
       "memory": 512,
       "portMappings": [
