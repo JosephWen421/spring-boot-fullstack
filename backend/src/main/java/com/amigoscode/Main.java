@@ -4,7 +4,6 @@ import com.amigoscode.customer.Customer;
 import com.amigoscode.customer.CustomerRepository;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
-import java.util.List;
 import java.util.Random;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +15,7 @@ public class Main {
 
   public static void main(String[] args) {
     SpringApplication.run(Main.class, args);
+
   }
 
   @Bean
