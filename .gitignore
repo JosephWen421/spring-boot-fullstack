@@ -1,5 +1,6 @@
 **/target
 **/.idea
+**/.mvn
 **/node_modules
 **/.DS_store
 
