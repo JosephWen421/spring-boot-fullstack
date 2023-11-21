@@ -23,6 +23,8 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <docker.username>josephwen</docker.username>
+    <docker.image.name>josephwen-api</docker.image.name>
+    <docker.image.tag/>
   </properties>
   <dependencies>
     <dependency>
@@ -183,7 +185,7 @@
             </platforms>
           </from>
           <to>
-            <image>docker.io/${docker.username}/${project.artifactId}:${project.version}</image>
+            <image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
             <tags>
               <tag>latest</tag>
             </tags>
