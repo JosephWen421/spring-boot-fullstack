@@ -30,7 +30,7 @@ public class Main {
       Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
       Customer customer = new Customer(
           firstName + " " + lastName,
-          firstName.toLowerCase() + "." + lastName.toLowerCase() + "@karstcode.com",
+          firstName.toLowerCase() + "." + lastName.toLowerCase() + "@Karstcode.com",
           age,
           gender
       );
