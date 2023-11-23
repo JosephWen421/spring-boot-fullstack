@@ -34,7 +34,7 @@ jobs:
       - name: Slack commit message and sha
         run: >
           curl -X POST -H 'Content-type: application/json'
-          --data '{"text":":github: https://github.com/amigoscode/spring-boot-full-stack/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}"}'
+          --data '{"text":":github: https://github.com/JosephWen421/spring-boot-fullstack/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}"}'
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         run: >
@@ -92,7 +92,7 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":githubloading: Committing to repo https://github.com/amigoscode/spring-boot-full-stack/"}' 
+          --data '{"text":":githubloading: Committing to repo https://github.com/JosephWen421/spring-boot-fullstack/"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
         run: |
