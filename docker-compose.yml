@@ -20,7 +20,7 @@ services:
       retries: 3
   spring-boot-example:
     container_name: spring-boot-example
-    image: josephwen/spring-boot-example
+    image: josephwen/josephwen-api
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/customer"
     ports:
