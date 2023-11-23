@@ -2,6 +2,7 @@ package com.amigoscode;
 
 import com.amigoscode.customer.Customer;
 import com.amigoscode.customer.CustomerRepository;
+import com.amigoscode.customer.Gender;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import java.util.Random;
@@ -25,10 +26,13 @@ public class Main {
       Name name = faker.name();
       String firstName = name.firstName();
       String lastName = name.lastName();
+      int age = random.nextInt(16, 99);
+      Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
       Customer customer = new Customer(
           firstName + " " + lastName,
           firstName.toLowerCase() + "." + lastName.toLowerCase() + "@amigoscode.com",
-          random.nextInt(16, 99)
+          age,
+          gender
       );
       customerRepository.save(customer);
     };

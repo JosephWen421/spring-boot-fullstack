@@ -44,7 +44,7 @@ class CustomerServiceTest {
     // Given
     int id = 1;
     Customer customer = new Customer(
-        1, "Alex", "alex@gamil.com", 19
+        1, "Alex", "alex@gamil.com", 19, Gender.MALE
     );
     when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -78,7 +78,8 @@ class CustomerServiceTest {
     CustomerRegistrationRequest request = new CustomerRegistrationRequest(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
     underTest.addCustomer(request);
 
@@ -102,7 +103,8 @@ class CustomerServiceTest {
     CustomerRegistrationRequest request = new CustomerRegistrationRequest(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
 
     // When
@@ -150,7 +152,8 @@ class CustomerServiceTest {
     Customer customer = new Customer(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
     when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -158,7 +161,8 @@ class CustomerServiceTest {
     CustomerUpdateRequest request = new CustomerUpdateRequest(
         "Alex andrew",
         newEmail,
-        23
+        23,
+        Gender.MALE
     );
     when(customerDao.existsPersonWithEmail(newEmail)).thenReturn(false);
 
@@ -185,14 +189,16 @@ class CustomerServiceTest {
     Customer customer = new Customer(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
     when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
     CustomerUpdateRequest request = new CustomerUpdateRequest(
         "Alex andrew",
         null,
-        null
+        null,
+        Gender.MALE
     );
 
     // When
@@ -218,7 +224,8 @@ class CustomerServiceTest {
     Customer customer = new Customer(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
     when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -226,7 +233,8 @@ class CustomerServiceTest {
     CustomerUpdateRequest request = new CustomerUpdateRequest(
         null,
         newEmail,
-        null
+        null,
+        Gender.MALE
     );
     when(customerDao.existsPersonWithEmail(newEmail)).thenReturn(false);
 
@@ -253,14 +261,16 @@ class CustomerServiceTest {
     Customer customer = new Customer(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
     when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
     CustomerUpdateRequest request = new CustomerUpdateRequest(
         null,
         null,
-        23
+        23,
+        Gender.MALE
     );
 
     // When
@@ -286,7 +296,8 @@ class CustomerServiceTest {
     Customer customer = new Customer(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
     when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -294,7 +305,8 @@ class CustomerServiceTest {
     CustomerUpdateRequest request = new CustomerUpdateRequest(
         null,
         newEmail,
-        null
+        null,
+        Gender.MALE
     );
     when(customerDao.existsPersonWithEmail(newEmail)).thenReturn(true);
 
@@ -315,14 +327,16 @@ class CustomerServiceTest {
     Customer customer = new Customer(
         "Alex",
         email,
-        19
+        19,
+        Gender.MALE
     );
     when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
     CustomerUpdateRequest request = new CustomerUpdateRequest(
         customer.getName(),
         customer.getEmail(),
-        customer.getAge()
+        customer.getAge(),
+        Gender.MALE
     );
 
     // When

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CustomerRowMapperTest {
@@ -20,12 +19,13 @@ class CustomerRowMapperTest {
     when(resultSet.getInt("age")).thenReturn(19);
     when(resultSet.getString("email")).thenReturn("Jamila@gmail.com");
     when(resultSet.getString("name")).thenReturn("Jamila");
+    when(resultSet.getString("gender")).thenReturn("MALE");
 
     // When
     Customer customer = customerRowMapper.mapRow(resultSet, 1);
 
     // Then
-    Customer expected = new Customer(1, "Jamila", "Jamila@gmail.com", 19);
+    Customer expected = new Customer(1, "Jamila", "Jamila@gmail.com", 19, Gender.MALE);
     assertThat(customer).isEqualTo(expected);
   }
 }

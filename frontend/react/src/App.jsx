@@ -19,7 +19,7 @@ const App = () => {
       }).finally(() => {
         setLoading(false)
       })
-    }, 1000)
+    }, 300)
   }, []);
 
   if (loading) {
@@ -51,6 +51,7 @@ const App = () => {
               <WrapItem key={index}>
                 <CardWithImage
                     {...customer}
+                    imageNumber={index}
                 />
               </WrapItem>
           ))}

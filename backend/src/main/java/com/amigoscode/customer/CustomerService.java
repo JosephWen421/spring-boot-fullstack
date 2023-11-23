@@ -41,7 +41,8 @@ public class CustomerService {
     Customer customer = new Customer(
         customerRegistrationRequest.name(),
         customerRegistrationRequest.email(),
-        customerRegistrationRequest.age()
+        customerRegistrationRequest.age(),
+        customerRegistrationRequest.gender()
     );
     customerDao.insertCustomer(customer);
   }
@@ -71,6 +72,7 @@ public class CustomerService {
       changes = true;
     }
 
+
     if (updateRequest.email() != null && !updateRequest.email().equals(customer.getEmail())) {
       if (customerDao.existsPersonWithEmail(updateRequest.email())) {
         throw new DuplicateResourceException(
@@ -78,6 +80,11 @@ public class CustomerService {
         );
       }
       customer.setEmail(updateRequest.email());
+      changes = true;
+    }
+
+    if (updateRequest.gender() != null && !updateRequest.gender().equals(customer.getGender())) {
+      customer.setGender(updateRequest.gender());
       changes = true;
     }
 
