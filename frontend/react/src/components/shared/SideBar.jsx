@@ -20,7 +20,6 @@ import {
   MenuItem,
   MenuList,
   Image,
-  Spinner,
 } from '@chakra-ui/react'
 import {
   FiHome,
@@ -55,7 +54,7 @@ const SidebarContent = ({onClose, ...rest}) => {
 
         <Flex h="20" flexDirection={"column"} alignItems="center" mx="8" mb={75}
               mt={5} justifyContent="space-between">
-          <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
+          <Text fontSize="2xl" fontFamily="sans-serif" fontWeight="bold" mb={5}>
             Dashboard
           </Text>
           <Image
@@ -169,7 +168,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                 </HStack>
               </MenuButton>
               <MenuList
-                  bg={useColorModeValue('aqua', 'gray.900')}
+                  bg={useColorModeValue('white', 'gray.900')}
                   borderColor={useColorModeValue('gray.200', 'gray.700')}>
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
