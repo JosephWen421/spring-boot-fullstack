@@ -16,7 +16,7 @@
     },
     {
       "name": "spring-boot-example",
-      "image": "josephwen/josephwen-api:24.11.2023.03.49.47",
+      "image": "josephwen/josephwen-api:25.11.2023.10.28.50",
       "essential": true,
       "memory": 512,
       "portMappings": [
