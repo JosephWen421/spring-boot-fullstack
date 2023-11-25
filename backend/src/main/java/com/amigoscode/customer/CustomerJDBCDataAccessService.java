@@ -22,6 +22,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     var sql = """
         SELECT id, name, email, age, gender
         FROM customer
+        ORDER BY id
         """;
     List<Customer> query = jdbcTemplate.query(sql, customerRowMapper);
     return query;

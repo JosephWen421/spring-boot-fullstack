@@ -9,8 +9,24 @@ import {
   Flex,
   Text,
   Stack,
-  useColorModeValue, Tag,
+  useColorModeValue,
+  Tag,
+  Button,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  useDisclosure,
+  AlertDialog,
 } from '@chakra-ui/react'
+import React, {useRef} from "react";
+import {deleteCustomer} from "../services/client.js";
+import {
+  errorNotification,
+  successNotification
+} from "../services/notification.js";
+import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
 export default function CardWithImage({
   id,
@@ -18,18 +34,27 @@ export default function CardWithImage({
   email,
   age,
   gender,
-  imageNumber
+  imageNumber,
+  fetchCustomers
 }) {
   const randomUserGender = gender === "MALE" ? "men" : "women";
+
+  const {isOpen, onOpen, onClose, update} = useDisclosure()
+  const cancelRef = useRef()
+
   return (
       <Center py={6}>
         <Box
+            position="relative"
             maxW={'300px'}
-            w={'full'}
+            w={'300px'}
+            h={'550px'}
             bg={useColorModeValue('white', 'gray.800')}
             boxShadow={'2xl'}
             rounded={'md'}
             overflow={'hidden'}>
+
+          {/*Background image*/}
           <Image
               h={'120px'}
               w={'full'}
@@ -39,6 +64,8 @@ export default function CardWithImage({
               objectFit="cover"
               alt="#"
           />
+
+          {/*Customer image*/}
           <Flex justify={'center'} mt={-12}>
             <Avatar
                 size={'xl'}
@@ -51,14 +78,93 @@ export default function CardWithImage({
             />
           </Flex>
 
+          {/*Customer info*/}
           <Box p={6}>
-            <Stack spacing={2} align={'center'} mb={5}>
+            <Stack spacing={2} align={'center'}>
               <Tag borderRadius={"full"}>{id}</Tag>
               <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
                 {name}
               </Heading>
               <Text color={'gray.500'}>{email}</Text>
               <Text color={'gray.500'}>Age {age} | {gender}</Text>
+            </Stack>
+          </Box>
+
+          {/* Update customer */}
+          <Box position="absolute" bottom="0" p="4" w={'full'}>
+            <Stack m={2}>
+              <UpdateCustomerDrawer
+                  initialValues={{name, email, age}}
+                  customerId={id}
+                  fetchCustomers={fetchCustomers}
+              />
+            </Stack>
+
+            {/* Delete customer */}
+            <Stack m={2}>
+              <Button
+                  marginX={5}
+                  marginY={2}
+                  bg={'red.400'}
+                  color={'white'}
+                  rounded={'full'}
+                  _hover={{
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'lg'
+                  }}
+                  _focus={{
+                    bg: 'green.500'
+                  }}
+                  onClick={onOpen}
+              >
+                Delete
+              </Button>
+              <AlertDialog
+                  isOpen={isOpen}
+                  leastDestructiveRef={cancelRef}
+                  onClose={onClose}
+              >
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                      Delete Customer
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                      Are you sure you want to delete {name}? You can't undo
+                      this
+                      action afterwards.
+                    </AlertDialogBody>
+
+                    <AlertDialogFooter>
+                      <Button ref={cancelRef} onClick={onClose}>
+                        Cancel
+                      </Button>
+                      <Button colorScheme='red' onClick={() => {
+                        deleteCustomer(id).then(res => {
+                          console.log(res)
+                          successNotification(
+                              'Customer deleted',
+                              `${name} was successfully deleted`
+                          )
+                          fetchCustomers();
+
+                        }).catch(err => {
+                          console.log(err);
+                          errorNotification(
+                              err.code,
+                              err.response.data.message
+                          )
+                        }).finally(() => {
+                          onClose()
+                        })
+                      }} ml={3}>
+                        Delete
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialog>
             </Stack>
           </Box>
         </Box>

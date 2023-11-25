@@ -52,6 +52,7 @@ const SidebarContent = ({onClose, ...rest}) => {
           pos="fixed"
           h="full"
           {...rest}>
+
         <Flex h="20" flexDirection={"column"} alignItems="center" mx="8" mb={75}
               mt={5} justifyContent="space-between">
           <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
@@ -60,11 +61,12 @@ const SidebarContent = ({onClose, ...rest}) => {
           <Image
               borderRadius='full'
               boxSize='75px'
-              src='https://randomuser.me/api/portraits/men/75.jpg'
+              src='https://m.media-amazon.com/images/I/51yRJCmmb-L._UF1000,1000_QL80_.jpg'
               alt='Amigoscode'
           />
           <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
         </Flex>
+
         {LinkItems.map((link) => (
             <NavItem key={link.name} icon={link.icon}>
               {link.name}
@@ -78,7 +80,7 @@ const NavItem = ({icon, children, ...rest}) => {
   return (
       <Box
           as="a"
-          href="#"
+          href=""
           style={{textDecoration: 'none'}}
           _focus={{boxShadow: 'none'}}>
         <Flex
@@ -156,7 +158,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                       alignItems="flex-start"
                       spacing="1px"
                       ml="2">
-                    <Text fontSize="sm">Justina Clark</Text>
+                    <Text fontSize="sm">LanSong</Text>
                     <Text fontSize="xs" color="gray.600">
                       Admin
                     </Text>
