@@ -169,7 +169,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                 </HStack>
               </MenuButton>
               <MenuList
-                  bg={useColorModeValue('white', 'gray.900')}
+                  bg={useColorModeValue('aqua', 'gray.900')}
                   borderColor={useColorModeValue('gray.200', 'gray.700')}>
                 <MenuItem>Profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
