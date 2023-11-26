@@ -1,5 +1,6 @@
 package com.amigoscode.customer;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository
@@ -8,4 +9,6 @@ public interface CustomerRepository
   boolean existsCustomerByEmail(String email);
 
   boolean existsCustomerById(Integer id);
+
+  Optional<Customer> findCustomerByEmail(String email);
 }

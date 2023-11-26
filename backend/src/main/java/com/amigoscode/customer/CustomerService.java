@@ -4,25 +4,36 @@ import com.amigoscode.Exception.DuplicateResourceException;
 import com.amigoscode.Exception.RequestValidationException;
 import com.amigoscode.Exception.ResourceNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerService {
 
   private final CustomerDao customerDao;
+  private final CustomerDTOMapper customerDTOMapper;
+  private final PasswordEncoder passwordEncoder;
 
-  public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
+  public CustomerService(@Qualifier("jdbc") CustomerDao customerDao,
+      CustomerDTOMapper customerDTOMapper, PasswordEncoder passwordEncoder) {
     this.customerDao = customerDao;
+    this.customerDTOMapper = customerDTOMapper;
+    this.passwordEncoder = passwordEncoder;
   }
 
-  public List<Customer> getAllCustomers() {
-    return customerDao.selectAllCustomers();
+  public List<CustomerDTO> getAllCustomers() {
+    return customerDao.selectAllCustomers()
+        .stream()
+        .map(customerDTOMapper)
+        .collect(Collectors.toList());
   }
 
-  public Customer getCustomer(Integer id) {
-    return customerDao.selectCustomerById(id).orElseThrow(
-        () -> new ResourceNotFoundException(
+  public CustomerDTO getCustomer(Integer id) {
+    return customerDao.selectCustomerById(id)
+        .map(customerDTOMapper)
+        .orElseThrow(() -> new ResourceNotFoundException(
             "Customer with id [%s] not found".formatted(id)
         ));
   }
@@ -41,6 +52,7 @@ public class CustomerService {
     Customer customer = new Customer(
         customerRegistrationRequest.name(),
         customerRegistrationRequest.email(),
+        passwordEncoder.encode(customerRegistrationRequest.password()),
         customerRegistrationRequest.age(),
         customerRegistrationRequest.gender()
     );
@@ -58,7 +70,10 @@ public class CustomerService {
 
   public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest) {
     // TODO: for JPA use .getReferenceById(customerId) as it does does not bring object into memory and instead a reference
-    Customer customer = getCustomer(customerId);
+    Customer customer = customerDao.selectCustomerById(customerId)
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "Customer with id [%s] not found".formatted(customerId)
+        ));
 
     boolean changes = false;
 
@@ -71,7 +86,6 @@ public class CustomerService {
       customer.setAge(updateRequest.age());
       changes = true;
     }
-
 
     if (updateRequest.email() != null && !updateRequest.email().equals(customer.getEmail())) {
       if (customerDao.existsPersonWithEmail(updateRequest.email())) {

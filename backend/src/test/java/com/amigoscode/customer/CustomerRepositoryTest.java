@@ -11,9 +11,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@Import({TestConfig.class})
 class CustomerRepositoryTest extends AbstractTestContainers {
 
   @Autowired
@@ -35,7 +37,7 @@ class CustomerRepositoryTest extends AbstractTestContainers {
     Customer customer = new Customer(
         FAKER.name().fullName(),
         email,
-        20,
+        "password", 20,
         Gender.MALE
     );
     underTest.save(customer);
@@ -66,7 +68,7 @@ class CustomerRepositoryTest extends AbstractTestContainers {
     Customer customer = new Customer(
         FAKER.name().fullName(),
         email,
-        20,
+        "password", 20,
         Gender.MALE
     );
     underTest.save(customer);

@@ -20,7 +20,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
   @Override
   public List<Customer> selectAllCustomers() {
     var sql = """
-        SELECT id, name, email, age, gender
+        SELECT id, name, email, password, age, gender
         FROM customer
         ORDER BY id
         """;
@@ -31,7 +31,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
   @Override
   public Optional<Customer> selectCustomerById(Integer id) {
     var sql = """
-        SELECT id, name, email, age, gender
+        SELECT id, name, email, password, age, gender
         FROM customer
         WHERE id = ?
         """;
@@ -43,13 +43,14 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
   @Override
   public void insertCustomer(Customer customer) {
     var sql = """
-        INSERT INTO customer (name, email, age, gender)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO customer (name, email, password, age, gender)
+        VALUES (?, ?, ?, ?, ?)
         """;
     int result = jdbcTemplate.update(
         sql,
         customer.getName(),
         customer.getEmail(),
+        customer.getPassword(),
         customer.getAge(),
         customer.getGender().name()
     );
@@ -132,6 +133,20 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
       System.out.println("update customer email result = " + result);
     }
 
+    if (update.getPassword() != null) {
+      var sql = """
+          UPDATE customer
+          SET password = ?
+          WHERE id = ?
+          """;
+      int result = jdbcTemplate.update(
+          sql,
+          update.getPassword(),
+          update.getId()
+      );
+      System.out.println("update customer email result = " + result);
+    }
+
     if (update.getGender() != null) {
       var sql = """
           UPDATE customer
@@ -145,5 +160,17 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
       );
       System.out.println("update customer gender result = " + result);
     }
+  }
+
+  @Override
+  public Optional<Customer> selectUserByEmail(String email) {
+    var sql = """
+        SELECT id, name, email, password, age, gender
+        FROM customer
+        WHERE email = ?
+        """;
+    return jdbcTemplate.query(sql, customerRowMapper, email)
+        .stream()
+        .findFirst();
   }
 }
